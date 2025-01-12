@@ -6,7 +6,7 @@ const app = express();
 const targetUrl = 'http://94.131.246.109:5555/v1/2';
 
 // Проксі для всіх запитів на API
-app.use('/api', createProxyMiddleware({
+app.use('/', createProxyMiddleware({
   target: targetUrl,
   changeOrigin: true,
   pathRewrite: {
