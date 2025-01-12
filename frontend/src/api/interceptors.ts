@@ -1,14 +1,16 @@
 import axios from "axios";
 import { showToast } from "@/utils";
 
-const PROXY_URL = "";
-// const BASE_URL = window.location.host === 'localhost' ? "http://94.131.246.109:5555/v1/2" : ;
-const BASE_URL = "http://94.131.246.109:5555/v1/2";
+const BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:4000/"
+    : "https://attendence-z6yw.onrender.com/";
+
 const TEST_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlZpdGFsaWkgVGVzdCIsImlhdCI6MTIzNDU2fQ.pcdj2JlYXvCMuKmY__iDhUXO1xJYhRDJmE9xLu3qIuE";
 
 const api = axios.create({
-  baseURL: `${PROXY_URL}${BASE_URL}`,
+  baseURL: BASE_URL,
 });
 
 api.interceptors.request.use(

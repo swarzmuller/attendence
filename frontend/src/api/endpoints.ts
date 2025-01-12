@@ -15,7 +15,6 @@ export const getAttendance = async (schoolboyId?: number) => {
   const { data } = await api.get("/Rate", {
     params: { SchoolboyId: schoolboyId },
   });
-  console.log(data);
   return data.Items as Attendance[];
 };
 

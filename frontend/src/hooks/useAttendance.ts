@@ -1,9 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getAttendance, postRate, postUnRate } from "@/api";
 import { Attendance } from "@/types";
+import { showToast } from "@/utils";
 
-export const useAttendance = (schoolboyId?: number) =>
-  useQuery(["attendance", schoolboyId], () => getAttendance(schoolboyId));
+export const useAttendance = (schoolboyId?: number) => {
+  const queryClient = useQueryClient();
+  return useQuery(["attendance", schoolboyId], () =>
+    getAttendance(schoolboyId).then((result) => {
+      const message = queryClient.getQueryData(["message"]) as string;
+      if (message) {
+        showToast(message, "success");
+      }
+      return result;
+    })
+  );
+};
 
 export const useMutateAttendance = () => {
   const queryClient = useQueryClient();

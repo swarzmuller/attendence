@@ -19,11 +19,12 @@ import {
   useSchoolboys,
   useLazyLoading,
 } from "@/hooks";
-import { showToast } from "@/utils";
 import { ABSENT_ICON, LOADED_ROWS, ROWS_QTY } from "@/constans";
 import * as S from "./styles";
+import { useQueryClient } from "react-query";
 
 export const AttendanceTable = () => {
+  const queryClient = useQueryClient();
   const lazy = useLazyLoading();
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(
@@ -62,15 +63,14 @@ export const AttendanceTable = () => {
   ) => {
     if (title === ABSENT_ICON) {
       removeAttendance.mutate({ SchoolboyId: schoolboyId, ColumnId: columnId });
-      showToast(`${name} - ПРИСУТНІЙ/НЯ`, "success");
-      console.log(removeAttendance)
+      queryClient.setQueryData(["message"], `${name} - ПРИСУТНІЙ/НЯ`);
     } else {
       addAttendance.mutate({
         SchoolboyId: schoolboyId,
         ColumnId: columnId,
         Title: ABSENT_ICON,
       });
-      showToast(`${name} -  ВІДСУТНІЙ/НЯ`, "success");
+      queryClient.setQueryData(["message"], `${name} - ВІДСУТНІЙ/НЯ`);
     }
   };
 
